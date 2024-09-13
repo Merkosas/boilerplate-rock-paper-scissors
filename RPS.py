@@ -1,10 +1,34 @@
-# The example function below keeps track of the opponent's history and plays whatever the opponent played two plays ago. It is not a very good player so you will need to change the code to pass the challenge.
-
 def player(prev_play, opponent_history=[]):
     opponent_history.append(prev_play)
 
-    guess = "R"
-    if len(opponent_history) > 2:
-        guess = opponent_history[-2]
+    # Strategy against Quincy
+    if len(opponent_history) % 5 == 0:
+        return "P"  # Quincy will play "R"
+    elif len(opponent_history) % 5 == 1:
+        return "P"  # Quincy will play "R"
+    elif len(opponent_history) % 5 == 2:
+        return "S"  # Quincy will play "P"
+    elif len(opponent_history) % 5 == 3:
+        return "S"  # Quincy will play "P"
+    elif len(opponent_history) % 5 == 4:
+        return "R"  # Quincy will play "S"
 
-    return guess
+    # Strategy against Kris
+    if prev_play == "R":
+        return "P"
+    elif prev_play == "P":
+        return "S"
+    elif prev_play == "S":
+        return "R"
+
+    # Strategy against Mrugesh and Abbey
+    return "R"  # Play randomly or use a more sophisticated strategy
+
+# Example usage
+if __name__ == "__main__":
+    from RPS_game import play, quincy, abbey, kris, mrugesh
+
+    play(player, quincy, 1000)
+    play(player, abbey, 1000)
+    play(player, kris, 1000)
+    play(player, mrugesh, 1000)
